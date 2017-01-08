@@ -7,7 +7,7 @@ import com.rabbitmq.client.Channel;
 
 public class NewTask {
 
-	private final static String QUEUE_NAME = "hello";
+	private final static String QUEUE_NAME = "task_queue";
 
 	public static void main(String[] args) throws Exception {
 
