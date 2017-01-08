@@ -1,13 +1,14 @@
 package com.index.queueTest.RabbitTest01;
 
 import com.rabbitmq.client.ConnectionFactory;
+import com.rabbitmq.client.MessageProperties;
 import com.rabbitmq.client.Connection;
 
 import com.rabbitmq.client.Channel;
 
 public class NewTask {
 
-	private final static String QUEUE_NAME = "task_queue";
+	private final static String QUEUE_NAME = "queue_durable";
 
 	public static void main(String[] args) throws Exception {
 
@@ -18,9 +19,10 @@ public class NewTask {
 		Channel channel = connection.createChannel();
 
 		//Channel
-		channel.queueDeclare(QUEUE_NAME, false, false, false, null);
+		boolean durable = true;
+		channel.queueDeclare(QUEUE_NAME, durable, false, false, null);
 		String message = getMessage(args);
-		channel.basicPublish("", QUEUE_NAME, null, message.getBytes());
+		channel.basicPublish("", QUEUE_NAME, MessageProperties.PERSISTENT_TEXT_PLAIN, message.getBytes());
 		System.out.println("[x] Sent '" + message + "'");
 
 		channel.close();
